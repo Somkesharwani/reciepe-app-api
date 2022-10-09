@@ -10,11 +10,15 @@ WORKDIR /app
 EXPOSE 8000
 
 ARG DEV= false
+RUN echo $DEV
+RUN more /tmp/requirement.dev.txt
 RUN python -m venv /py && \ 
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirement.txt && \
-    if  [ $DEV = "true"];\
-       then /py/bin/pip install -r /tmp/requirement.dev.txt ; \
+    #/py/bin/pip install -r /tmp/requirement.dev.txt ; \
+    if  [ $DEV = "true" ] ; \
+       then \
+       /py/bin/pip install -r /tmp/requirement.dev.txt ; \
        echo "This script runing in DEV mode" ; \
     fi && \
     rm -rf /tmp && \
@@ -25,5 +29,5 @@ RUN python -m venv /py && \
 
 ENV PATH="/py/bin:$PATH"
 
-USER  django-user
+#USER  django-user
 
