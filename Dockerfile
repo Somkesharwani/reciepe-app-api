@@ -9,12 +9,13 @@ COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
 
-ARG DEV=false
+ARG DEV=true
 RUN python -m venv /py && \ 
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirement.txt && \
-    if  [ $DEV =='true'];\
+    if  [ $DEV == "true"];\
        then /py/bin/pip install -r /tmp/requirement.dev.txt ; \
+       echo "This script runing in DEV mode" ; \
     fi && \
     rm -rf /tmp && \
     adduser \
