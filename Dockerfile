@@ -15,6 +15,9 @@ RUN more /tmp/requirement.dev.txt
 RUN python -m venv /py && \ 
     /py/bin/pip install --upgrade pip && \
     /py/bin/pip install -r /tmp/requirement.txt && \
+    apk add --update --no--cache postgresql-client && \
+    apk add --update --no--cache --virtual .tmp-build-deps \
+      build-base postgresql-dev musl-dev && \
     #/py/bin/pip install -r /tmp/requirement.dev.txt ; \
     if  [ $DEV = "true" ] ; \
        then \
@@ -22,6 +25,7 @@ RUN python -m venv /py && \
        echo "This script runing in DEV mode" ; \
     fi && \
     rm -rf /tmp && \
+    apk del .tmp-build-deps && \
     adduser \
         --disabled-password \
         --no-create-home \
