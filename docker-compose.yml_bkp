@@ -1,8 +1,8 @@
-version: "3.9"
+version: '3.9'
 
 services:
   app:
-    build:
+    build: 
       context: .
       args:
         - DEV=true
@@ -11,25 +11,23 @@ services:
     volumes:
       - ./app:/app
     command: >
-      sh -c "python manage.py wait_for_db &&
-      python manage.py migration &&
-      python manage.py runserver 0.0.0.0:8000"
+       sh -c "python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=devuser
-      - DB_PASS=changeme
+      - DB_PASSWORD=changeme
     depends_on:
       - db
-
-  db:
-    image: postgres:13-alpine
+  
+  db: 
+    image: postgres:alpine3.16
     volumes:
-      - dev-db-data:/var/lib/postgres/data
+      - dev-db-data: var/lib/postgres/data
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
 
 volumes:
-  dev-db-data:
+  dev-db-data: 

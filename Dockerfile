@@ -14,8 +14,8 @@ RUN echo $DEV
 RUN more /tmp/requirement.dev.txt
 RUN python -m venv /py && \ 
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no--cache postgresql-client && \
-    apk add --update --no--cache --virtual .tmp-build-deps \
+    apk add --update postgresql-client && \
+    apk add --update --virtual .tmp-build-deps \
       build-base postgresql-dev musl-dev && \
     /py/bin/pip install -r /tmp/requirement.txt && \
     #/py/bin/pip install -r /tmp/requirement.dev.txt ; \
