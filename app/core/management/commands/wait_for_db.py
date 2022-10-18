@@ -13,7 +13,7 @@ from django.core.management.base import BaseCommand
 class Command(BaseCommand):
     """Django command wait for Database"""
 
-    def handle(self, *args, **options) -> str:
+    def handle(self, *args, **options):
         """EntryPoint for command"""
         self.stdout.write('Waiting for Databases')
         db_up=False
