@@ -10,8 +10,10 @@ WORKDIR /app
 EXPOSE 8000
 
 ARG DEV= false
-RUN python -m venv /py && \ 
+RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
+    /py/bin/pip install tk &&\
+    apk add tk && \
     apk add --update postgresql-client && \
     apk add --update --virtual .tmp-build-deps \
       build-base postgresql-dev musl-dev && \
