@@ -20,5 +20,5 @@ router.register('ingredients',views.IngredientViewSet)
 app_name = 'recipe'
 
 urlpatterns = [
-    path('', include(router.urls))
+    path('', include(router.urls)),
 ]
