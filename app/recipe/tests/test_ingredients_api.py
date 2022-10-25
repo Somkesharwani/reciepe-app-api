@@ -15,7 +15,7 @@ from core.models import Ingredient
 
 from recipe.serializers import IngredientSerializer
 
-INFREDIENTS_URL = reverse('recipe:ingredients-list')
+INGREDIENTS_URL = reverse('recipe:ingredient-list')
 
 def create_user(email='user@example.com',password='testpass123'):
     """Create test user and return"""
@@ -29,7 +29,7 @@ class PublicIngredientApiTests(TestCase):
 
     def test_auth_required(self):
         """Test auth is required for retriving ingredients. """
-        res = self.client.get(INFREDIENTS_URL)
+        res = self.client.get(INGREDIENTS_URL)
         self.assertEqual(res.status_code,status.HTTP_401_UNAUTHORIZED)
 
 class PrivateIngredientsApiTests(TestCase):
@@ -43,9 +43,9 @@ class PrivateIngredientsApiTests(TestCase):
     def test_reterieve_ingredients(self):
         """Test retriving a list of Ingredients. """
         Ingredient.objects.create(user=self.user,name='Kale')
-        Ingredient.objects.create(userr=self.user,name='Vanilla')
+        Ingredient.objects.create(user=self.user,name='Vanilla')
 
-        res = self.client.get(INFREDIENTS_URL)
+        res = self.client.get(INGREDIENTS_URL)
 
         ingredient = Ingredient.objects.all().order_by('-name')
         serializer = IngredientSerializer(ingredient, many=True)
@@ -58,11 +58,11 @@ class PrivateIngredientsApiTests(TestCase):
 
         user2 =create_user(email='user2@example.com')
         Ingredient.objects.create(user=user2, name='Salt')
-        ingredients = Ingredient.objects.create(user=self.user, name='Pepper')
+        ingredient = Ingredient.objects.create(user=self.user, name='Pepper')
 
-        res = self.client.get(INFREDIENTS_URL)
+        res = self.client.get(INGREDIENTS_URL)
 
         self.assertEqual(res.status_code,status.HTTP_200_OK)
         self.assertEqual(len(res.data),1)
-        self.assertEqual(res.data[0]['name'],ingredients.name)
-        self.assertEqual(res.data[0]['id'],ingredients.id)
+        self.assertEqual(res.data[0]['name'],ingredient.name)
+        self.assertEqual(res.data[0]['id'],ingredient.id)

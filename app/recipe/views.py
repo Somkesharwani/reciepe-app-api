@@ -8,7 +8,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import render
 
-from core.models import Recipe,Tag
+from core.models import Recipe,Tag,Ingredient
 from recipe import serializers
 
 
@@ -50,7 +50,7 @@ class TagViewSet(mixins.DestroyModelMixin,
 class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     """Manage ingredient i databse"""
     serializer_class = serializers.IngredientSerializer
-    queryset = Recipe.objects.all()
+    queryset = Ingredient.objects.all()
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
