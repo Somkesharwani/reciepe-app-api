@@ -47,8 +47,15 @@ class TagViewSet(mixins.DestroyModelMixin,
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user).order_by('-name')
 
+class IngredientViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    """Manage ingredient i databse"""
+    serializer_class = serializers.IngredientSerializer
+    queryset = Recipe.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user).order_by('-name')
 
 
 
