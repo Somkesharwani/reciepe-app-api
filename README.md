@@ -1,7 +1,7 @@
 # reciepe-app-api
 
 Soon document will be update but for now you can user below command to build and view the app.
-Note : Docker installation required
+</br><b>Note : Docker installation required</b>
 
 open Command promt inside reciepe-app-api folder after checckkin the code.</br>
 RUN below command:
