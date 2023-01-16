@@ -1,8 +1,10 @@
 """
-Tests for the ingredients API.
+Test for the ingredients API.
 """
+
 from decimal import Decimal
 
+from unicodedata import name
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import TestCase
@@ -17,9 +19,7 @@ from core.models import (
 
 from recipe.serializers import IngredientSerializer
 
-
 INGREDIENTS_URL = reverse('recipe:ingredient-list')
-
 
 def detail_url(ingredient_id):
     """Create and return an ingredient detail URL."""
@@ -38,14 +38,14 @@ class PublicIngredientsApiTests(TestCase):
         self.client = APIClient()
 
     def test_auth_required(self):
-        """Test auth is required for retrieving ingredients."""
+        """Test auth is required for retriving ingredients. """
         res = self.client.get(INGREDIENTS_URL)
 
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class PrivateIngredientsApiTests(TestCase):
-    """Test authenticated API requests."""
+    """Test unauthenticated API requests. """
 
     def setUp(self):
         self.user = create_user()

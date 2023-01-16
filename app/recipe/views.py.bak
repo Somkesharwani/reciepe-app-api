@@ -125,10 +125,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
 
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
-
-        return queryset.filter(
-            user=self.request.user
-        ).order_by('-name').distinct()
+        return queryset.filter(user=self.request.user).order_by('-name')
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
@@ -141,3 +138,8 @@ class IngredientViewSet(BaseRecipeAttrViewSet):
     """Manage ingredient i databse"""
     serializer_class = serializers.IngredientSerializer
     queryset = Ingredient.objects.all()
+
+
+
+
+
