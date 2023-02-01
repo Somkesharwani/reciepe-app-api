@@ -13,4 +13,13 @@ To Run this application please follow the bellow points
 	a) Create user from the user post api
 	b) generate the token for the user
 	c) save the token for the user in Authorize tab
-	d) Now, you can create recipe using the reciepe api
+	d) Now, you can create recipe using the reciepe api7. 
+	
+
+7. To run the testing framework from CLI run below command.
+     
+	  docker-compose run --rm app sh -c "python manage.py test"
+
+8. To stop the running docker container run bellow command.
+      
+	  docker-compose down
