@@ -3,14 +3,17 @@ Test for models
 """
 
 from decimal import Decimal
-from turtle import title
-
+from unittest.mock import patch
 from webbrowser import get
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 
 from core import models
 
+
+def create_user(email='user@example.com', password='testpass123'):
+    """Create and return a new user"""
+    return get_user_model().objects.create_user(email,password)
 
 class ModelTests(TestCase):
     """Test models,"""
@@ -66,3 +69,28 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(str(recipe), recipe.title)
+
+    def test_create_tag(self):
+        """test create tag successful"""
+        user = create_user()
+        tag = models.Tag.objects.create(user=user,name='Tag1')
+
+        self.assertEqual(str(tag),tag.name)
+
+    def test_create_ingredient(self):
+        """Test create ingredient"""
+        user = create_user()
+        ingredient = models.Ingredient.objects.create(
+            user=user,
+            name='Ingridient'
+        )
+        self.assertEqual(str(ingredient),ingredient.name)
+
+    @patch('core.models.uuid.uuid4')
+    def test_recipe_file_name_uuid(self, mock_uuid):
+
+        uuid = 'test-uuid'
+        mock_uuid.return_value = uuid
+        file_path = models.recipe_image_file_path(None, 'example.jpg')
+
+        self.assertEqual(file_path, f'uploads/recipe/{uuid}.jpg')
